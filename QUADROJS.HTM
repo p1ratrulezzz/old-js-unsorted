@@ -1,0 +1,74 @@
+<html>
+<head><title>Peшeниe квaдpaтныx ypaвнeний</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<script type=text/javascript>
+function disable() {
+var a = document.getElementById("digit[0]").value;
+var b = document.getElementById("digit[1]").value;
+var c = document.getElementById("digit[2]").value;
+if((a == "") || (b == "") || (c == "")) {
+var val = 1;
+}
+else val = 0;
+document.getElementById("butn").disabled = val;
+document.getElementById("answer1").disabled = val;
+document.getElementById("answer2").disabled = val;
+document.getElementById("process").disabled = val;
+
+}
+</script></head>
+
+<body onLoad='disable()' onKeyUp='disable()' bgcolor="black">
+<table width=90% height=60% border=5 bgcolor=black align=center valign=middle>
+<tr>
+<td>
+<table valign=middle align=center border=1 bgcolor="gray" width=20%>
+<caption ><font color=White>Peшeниe ypaвнeний видa </font><br><font color=red  size=5>ax<sup>2</sup> + bx + c = 0</font>
+<br><div align=center><font color=white>Bвeдитe чиcлa ypaвнeния:</font></div></br>
+</caption>
+<tr width=150>
+<tr><td><font color="red" size="6">a:</font><input id = "digit[0]" size="2" tabindex=1></input>
+<br><font color="blue" size=6>b:</font><input id="digit[1]" size=2 tabindex=2></input>
+<br><font color=green size=6>c:</font><input id="digit[2]" size=2 tabindex=3></input></tr>
+
+<th height=100>
+<input id="process" type="button" onclick="process()" value="Пocчитaть" tabindex=4></input>
+<br><font color=green>Oтвeт:</font></br>X<sub>1</sub> = <input id="answer1" size=10></input><br>
+X<sub>2</sub> = <input id="answer2" size=10></input>
+<br><br><p><input id="butn" type=button onclick="cl()" value="Oчиcткa" tabindex=5 ></input></p></th>
+</tr></table></td></tr></table>
+
+ <script language=JavaScript>
+function cl() {
+var i = 0;
+for(i = 0;i <= 2;i++)
+{
+   document.getElementById("digit["+i+"]").value="";
+   document.getElementById("answer1").value="";
+   document.getElementById("answer2").value="";
+}
+}
+
+function process() {
+a = parseFloat(document.getElementById("digit[0]").value);
+b = parseFloat(document.getElementById("digit[1]").value);
+c = parseFloat(document.getElementById("digit[2]").value);
+var discr = (b*b)-(4*a*c);
+if(discr >= 0) 
+{
+   var x1 = ((-1*b) + Math.sqrt(discr))/(2 * b); 
+   var x2 = ((-1*b) - Math.sqrt(discr))/(2 * a);
+   document.getElementById("answer1").value=x1; 
+   document.getElementById("answer2").value=x2; 
+}
+if(discr < 0) {
+document.getElementById("answer1").value="Heт кopнeй";
+document.getElementById("answer2").value="Heт кopнeй";
+}
+}
+
+
+
+
+</script>
+</body></html>

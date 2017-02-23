@@ -1,0 +1,258 @@
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+
+<style type="text/css">
+.square 
+{
+   border:solid 3px green;
+   width:30px;
+   height:30px;
+   background-color:yellow;
+}
+body {background-color:black;color:white;font-family:Georgia, Times, Arial, Tahoma;}
+</style>
+</head>
+<body>
+<table>
+<tr><td>
+<button id="process_button" onClick='process_game(true);disable_field(false);'>Play Game</button>
+</td>
+<td>
+<button id="restart_button" disabled onClick='process_game(false);disable_field(true,"");'>New Game</button>
+</td>
+</tr>
+<tr><td>
+Фигypa:</td>
+<td>
+<select id="figure">
+   <option id="figure_0" value="X" selected>Kpecтик</option>
+   <option id="figure_1" value="0">Hoлик</option>
+</select>
+</td>
+</tr><tr><td>
+Ypoвeнь cлoжнocти:
+</td>
+<td>
+<select id="difficulty">
+   <option value=0>Easy</option>
+   <option value=1 selected>Medium</option>
+   <option value=2>Hard</option>
+</select>
+</td></tr>
+
+<table id="playfield" cellspacing=0 cellpadding=0>
+<tr>
+   <td><input name="square" type="button" onClick='ManTurn(this);CompTurn(parseInt(document.getElementById("difficulty").value));' class="square" id="q_1" /></td>
+   <td><input name="square" type="button" onClick='ManTurn(this);CompTurn(parseInt(document.getElementById("difficulty").value));' class="square" id="q_2" /></td>
+   <td><input name="square" type="button" onClick='ManTurn(this);CompTurn(parseInt(document.getElementById("difficulty").value));' class="square" id="q_3" /></td>
+</tr>
+<tr>
+   <td><input name="square" type="button" onClick='ManTurn(this);CompTurn(parseInt(document.getElementById("difficulty").value));' class="square" id="q_4" /></td>
+   <td><input name="square" type="button" onClick='ManTurn(this);CompTurn(parseInt(document.getElementById("difficulty").value));' class="square" id="q_5" /></td>
+   <td><input name="square" type="button" onClick='ManTurn(this);CompTurn(parseInt(document.getElementById("difficulty").value));' class="square" id="q_6" /></td>
+</tr>
+<tr>
+   <td><input name="square"  type="button" onClick='ManTurn(this);CompTurn(parseInt(document.getElementById("difficulty").value));' class="square" id="q_7" /></td>
+   <td><input name="square"  type="button" onClick='ManTurn(this);CompTurn(parseInt(document.getElementById("difficulty").value));' class="square" id="q_8" /></td>
+   <td><input name="square"  type="button" onClick='ManTurn(this);CompTurn(parseInt(document.getElementById("difficulty").value));' class="square" id="q_9" /></td>
+</tr>
+</table>
+<script type="text/javascript">
+function take_focus()
+{
+if(!overflow())
+{
+var pos;
+do
+{
+pos=Math.round(Math.random() * 8)+1;
+}
+while(document.getElementById("q_"+pos).value!="")
+document.getElementById("q_"+pos).focus();
+}
+}
+function process_game(mode)
+{
+   document.getElementById("figure").disabled=mode;
+   document.getElementById("difficulty").disabled=mode;
+   document.getElementById("process_button").disabled=mode;
+   document.getElementById("restart_button").disabled=!document.getElementById("restart_button").disabled;
+
+}
+function disable_field(mode,val)
+{
+   var objs = document.getElementsByName("square");
+   for(i=0;i<=objs.length-1;i++)
+   {
+      if(val!=undefined) objs[i].value = val;
+      objs[i].disabled = mode;
+   }
+}
+function overflow()
+{
+   var i;
+   for(i=1;i<=9;i++)
+   {
+      if(document.getElementById("q_"+i).value=="") return false;
+   }
+   return true;
+   
+}
+function ManTurn(obj)
+{
+   var figure = document.getElementById("figure").value;
+   if(obj.value=="") 
+   { 
+      obj.value=figure;
+      obj.disabled=true;
+   }
+   
+}
+/*
+0 1 2
+3 4 5
+6 7 8
+*/
+function CheckDouble(fig)
+{
+   var objs = document.getElementsByName("square");
+   var place=-1;
+            //vertical 1
+            if(objs[0].value==objs[1].value && objs[2].value=="" && objs[0].value!="" && objs[0].value==fig) place=2; 
+            if(objs[1].value==objs[2].value && objs[0].value=="" && objs[1].value!="" && objs[1].value==fig) place=0; 
+            if(objs[0].value==objs[2].value && objs[1].value=="" && objs[0].value!="" && objs[0].value==fig) place=1; 
+            //vertical 2
+            if(objs[3].value==objs[4].value && objs[5].value=="" && objs[3].value!="" && objs[3].value==fig) place=5;       
+            if(objs[4].value==objs[5].value && objs[3].value=="" && objs[4].value!="" && objs[4].value==fig) place=3;       
+            if(objs[3].value==objs[5].value && objs[4].value=="" && objs[3].value!="" && objs[3].value==fig) place=4;          
+            //vertical 3
+            if(objs[6].value==objs[7].value && objs[8].value=="" && objs[6].value!="" && objs[6].value==fig) place=8; 
+            if(objs[7].value==objs[8].value && objs[6].value=="" && objs[7].value!="" && objs[7].value==fig) place=6; 
+            if(objs[6].value==objs[8].value && objs[7].value=="" && objs[6].value!="" && objs[6].value==fig) place=7; 
+            //gorizontal 1
+            if(objs[0].value==objs[3].value && objs[6].value=="" && objs[0].value!="" && objs[0].value==fig) place=6; 
+            if(objs[0].value==objs[6].value && objs[3].value=="" && objs[0].value!="" && objs[0].value==fig) place=3; 
+            if(objs[3].value==objs[6].value && objs[0].value=="" && objs[3].value!="" && objs[3].value==fig) place=0; 
+            //gorizontal 2
+            if(objs[1].value==objs[4].value && objs[7].value=="" && objs[1].value!="" && objs[1].value==fig) place=7; 
+            if(objs[4].value==objs[7].value && objs[1].value=="" && objs[4].value!="" && objs[4].value==fig) place=1; 
+            if(objs[1].value==objs[7].value && objs[4].value=="" && objs[1].value!="" && objs[1].value==fig) place=4; 
+            //gorizontal 3
+            if(objs[2].value==objs[5].value && objs[8].value=="" && objs[2].value!="" && objs[2].value==fig) place=8; 
+            if(objs[5].value==objs[8].value && objs[2].value=="" && objs[5].value!="" && objs[5].value==fig) place=2; 
+            if(objs[2].value==objs[8].value && objs[5].value=="" && objs[2].value!="" && objs[2].value==fig) place=5; 
+            //diagonal 1
+            if(objs[0].value==objs[4].value && objs[8].value=="" && objs[0].value!="" && objs[0].value==fig) place=8; 
+            if(objs[0].value==objs[8].value && objs[4].value=="" && objs[0].value!="" && objs[0].value==fig) place=4; 
+            if(objs[4].value==objs[8].value && objs[0].value=="" && objs[4].value!="" && objs[4].value==fig) place=0; 
+            //diagonal 2
+            if(objs[4].value==objs[6].value && objs[2].value=="" && objs[4].value!="" && objs[4].value==fig) place=2; 
+            if(objs[6].value==objs[2].value && objs[4].value=="" && objs[6].value!="" && objs[6].value==fig) place=4; 
+            if(objs[2].value==objs[4].value && objs[6].value=="" && objs[2].value!="" && objs[2].value==fig) place=6; 
+   return place;
+}
+function CheckWin()
+{
+   var objs = document.getElementsByName("square");
+   if(objs[0].value==objs[1].value && objs[2].value==objs[1].value && objs[0].value!="") return objs[0].value;
+   if(objs[3].value==objs[4].value && objs[5].value==objs[4].value && objs[3].value!="") return objs[3].value;
+   if(objs[6].value==objs[7].value && objs[8].value==objs[7].value && objs[6].value!="") return objs[6].value;
+   //diagonal
+   if(objs[0].value==objs[4].value && objs[8].value==objs[4].value && objs[0].value!="") return objs[0].value;
+   if(objs[6].value==objs[4].value && objs[4].value==objs[2].value && objs[6].value!="") return objs[6].value;
+   //vertical
+   if(objs[0].value==objs[3].value && objs[3].value==objs[6].value && objs[0].value!="") return objs[0].value;
+   if(objs[1].value==objs[4].value && objs[4].value==objs[7].value && objs[1].value!="") return objs[1].value;
+   if(objs[2].value==objs[5].value && objs[5].value==objs[8].value && objs[2].value!="") return objs[2].value;
+   return false;
+}
+function CompTurn(difficulty)
+{
+   var figure = document.getElementById("figure").value;
+   var comp_figure = figure == "X" ? "0" : "X";
+var objs = document.getElementsByName("square");   
+switch(difficulty)
+   {
+      case 0:   
+         if(!CheckWin() && !overflow())
+         {
+            var rnd = Math.round(Math.random() * 8) + 1;
+            do
+            {
+              rnd = Math.round(Math.random() * 8) + 1;
+
+            }
+while(document.getElementById("q_"+rnd).value!="")
+           
+            document.getElementById("q_"+rnd).value=comp_figure;
+            document.getElementById("q_"+rnd).disabled = true;
+         }
+         
+      break;
+      case 1:
+         if(CheckWin()==false && !overflow())
+         {
+            var place = CheckDouble(figure);
+            
+            
+            if(place==-1)
+            {
+               
+               
+do
+               {
+               place=Math.round(Math.random() * 8)+1;
+               }
+while(objs[place].value!="")
+
+            }
+            objs[place].value=comp_figure;
+            objs[place].disabled=true;
+            
+            
+         }
+      
+      break;
+      
+      case 2:
+         
+         if(CheckWin()==false && !overflow())
+         {
+            var place=CheckDouble(comp_figure);
+            if(place==-1)
+            {
+               place = CheckDouble(figure);
+               if(place==-1)
+               {
+                  
+                  
+                    
+             do       
+                     {
+                    place=Math.round(Math.random() * 8)+1;
+                     
+                     }
+ while(objs[place].value!="")
+                     
+                  
+               }
+            }
+            objs[place].value=comp_figure;
+            objs[place].disabled=true;
+         }
+      
+      break;
+   }
+   var win = CheckWin();
+   if(win!==false && !overflow())
+{
+ alert("Bыйгpaл "+(win==figure ? "Чeлoвeк" : "Koмп"));
+disable_field(true);
+}
+   else if(overflow()) alert("Hичья");
+}
+disable_field(true);
+document.getElementById("process_button").click();
+</script>
+</body>
+</html>

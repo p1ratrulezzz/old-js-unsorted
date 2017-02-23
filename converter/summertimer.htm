@@ -1,0 +1,225 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251" />
+  <title>
+	Таймер моих дат
+  </title>
+  <style type="text/css">
+  .main {background-color:gray;border:solid 3px white;}
+  body {background-color:black;color:white;}
+  .minibutton {width:2px;height:15px;position:relative;font-size:8px;}
+td {width:20px;}  
+</style>
+</head>
+<body>
+
+<table class="main" cellpadding="3px" cellspacing="3px">
+	<tr>
+		<td>Время:</td>
+		<td id="clock" width="100px">00:00:00</td>
+	</tr>
+	
+	<tr>
+		<td style="width:130;" id="para_type">До лета осталось:</td>
+		<td id="TimeString" width="100px">0 Дней и 00:00:00</td>
+		
+	</tr>
+		
+	
+	<tr>
+		<td>Время обновления</td>
+		<td style="width:200;">
+			<input id="updateTime" value="1000" size="3" disabled />
+			<!--
+			<input class="minibutton" onKeyUp="" type="button" style="top:-8px;" value="+" onClick='updateTimeChange("+")' />
+			<input class="minibutton" onKeyUp="" type="button" style="top:8px;left:-22px;" value="-" onClick='updateTimeChange("-")' />
+			-->
+			<input onKeyUp="" type="button"  value="+" onClick='updateTimeChange("+")' />
+			<input onKeyUp="" type="button"  value="-" onClick='updateTimeChange("-")' />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			Таймер:
+		</td>
+		<td>
+			<input type="button" onKeyUp="" id="engine" value="Engine" onClick="engine()" />
+		</td>
+	</tr>
+	<tr><td><hr></td><td><hr></td></tr>
+	<tr>
+	
+		<td>
+		
+			Дата назначения:
+		</td>
+		<td>
+			<select id="timetable">
+					<option value="date=1;month=7;hours=0;minutes=0;year=0;autoyear=true;dname='До лета:'" selected>Лето(1 июля)(по умолчанию)</option>
+					<option value="date=1;month=1;hours=0;minutes=0;year=0;autoyear=true;dname='Новый год через:'" >Новый год(1 января)</option>
+					<option value="date=27;month=11;hours=0;minutes=0;year=0;autoyear=true;dname='Мой д.р. через:'" >Мой день рождения(27 ноября)</option>
+					<!--Add your dates here-->
+					<!--
+					<option value="date=день;month=месяц;hours=часы;minutes=минуты;year=год;autoyear=true;dname='текст сообщения'" >Название пункта</option>
+					-->
+					<option value="other">Ввести</option>
+					
+			</select><br />
+			<font id="othertime" style="visibility:hidden;">JavaScript:<input type="text" size=20 value="date=день;month=месяц;hours=часы;minutes=минуты;year=год;autoyear=true;dname='текст'" id="other_time" /></font>
+			<br /><input type="checkbox" id="changer">Выбранное время</input>
+			<br />
+			<input type="checkbox" id="showMseconds">Показать миллисекуды</input>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">
+function ge(id)
+{
+	return Object(document.getElementById(id));
+}
+engine_mode = 0;//engine
+sym = ":"; //time div sym
+function engine()
+{
+		
+		
+		engine_mode=engine_mode==0 ? 1 : 0;
+		if(engine_mode==1) TimeCounter();
+		Clock();
+		ge("engine").value=engine_mode==0 ? "Старт" : "Стоп";
+}
+function Clock()
+{
+	var m = new Date();
+	var hours = m.getHours();
+	var minutes = m.getMinutes();
+	var seconds = m.getSeconds();
+	var msec = m.getMilliseconds();
+	if(String(msec).length==2)
+	{
+		msec="0"+msec;
+	}
+	else if(String(msec).length==1) msec="00"+msec;
+	document.getElementById("clock").innerHTML=(hours<10 ? "0" : "")+hours+sym+(minutes<10 ? "0" : "")+minutes+sym+(seconds<10 ? "0" : "")+seconds+(document.getElementById("showMseconds").checked ? sym+msec : "");
+	setTimeout("Clock()",parseInt(document.getElementById("updateTime").value));
+}
+function updateTimeChange(how)
+{
+	var ob=document.getElementById("updateTime");
+	if(how=="+")
+	{
+		if(ob.value<2000) ob.value=parseInt(ob.value)+100;
+	}
+	else 
+	{
+		if(ob.value>0) ob.value-=100;
+		
+	}
+}
+function TimeCounter()
+{
+	
+	var n = new Date();
+	var to = new Date();
+	var hours=0,minutes=0,date=1,month=7,year=0;
+	var autoyear=true;
+	var dname = "До Лета:";
+	if(ge("changer").checked)
+	{
+		var totime = String(ge("other_time").value);
+		try
+		{
+			eval(totime);
+		}
+		catch(e)
+		{
+			alert("Error: "+ e);
+			ge("changer").checked = false;
+			TimeCounter();
+		}
+		
+		
+	}
+	ge("para_type").innerHTML = dname;
+	if(!autoyear) to.setYear(year);
+	to.setMonth(month-1);
+	to.setHours(hours);
+	to.setMinutes(minutes);
+	to.setSeconds(60,1000);
+	to.setDate(date);
+	
+	var divtime = to-n;
+	if(autoyear) divtime = divtime<0 ? (divtime+((n.getFullYear()+1)%4==0 ? 366 : 365)*24*60*60*1000) : divtime; 
+	if(divtime<0) 
+	{
+		ge("TimeString").value="Уже прошло"; 
+		
+		if(engine_mode==1) setTimeout("TimeCounter()",parseInt(document.getElementById("updateTime").value));
+	}
+	var tmp = Math.floor(divtime/(24*60*60*1000));
+	var timestring = new String(tmp);
+	var wordform = " Дней";
+	var lastdig = parseInt(String(tmp)[String(tmp).length-1]);
+	if(lastdig==1) wordform=" День";
+	else if(lastdig<5 && lastdig>1) wordform=" Дня";
+	timestring+=wordform+" и  ";
+	
+	divtime-=tmp*24*60*60*1000;
+	tmp = Math.floor(divtime/(60*60*1000));
+	timestring+=" "+(tmp<10 ? "0" : "")+String(tmp);
+	divtime -= tmp*60*60*1000;
+	tmp = Math.floor(divtime/(60*1000));
+	timestring+=sym+(tmp<10 ? "0" : "")+String(tmp);
+	divtime-=tmp*60*1000;
+	tmp = Math.floor(divtime/(1000))
+	timestring+=sym + (tmp<10 ? "0" : "") +  String(tmp);
+	if(ge("showMseconds").checked)
+	{
+		divtime-=tmp*1000;
+		timestring+=sym+(divtime<10 ? "0" : "")+String(divtime);
+	}
+	ge("TimeString").innerHTML=timestring;
+	if(engine_mode==1) setTimeout("TimeCounter()",parseInt(document.getElementById("updateTime").value));
+}
+ge("timetable").onfocus = function()
+{
+	engine_mode = 0;
+	
+	
+}
+ge("timetable").onblur = function()
+{
+	
+	if(this.value=="other") return; 
+	engine_mode=0;
+	ge("other_time").value=this.value;
+	engine();
+	
+}
+ge("timetable").onchange = function()
+{
+	if(this.value!="other") 
+	{
+		ge("othertime").style.visibility="hidden";
+		
+		this.blur();
+		return;
+	}
+	
+	engine_mode=1;
+	engine();
+	ge("othertime").style.visibility="inherit";
+}
+ge("other_time").onfocus = function()
+{
+	engine_mode=1;
+	engine();
+}
+ge("engine").value="Запустить";
+engine();
+</script>
+<center>
+	<cite>by <font style="font-family:Georgia, Tahoma, Arial;color:red;fint-weight:bold;font-decoration:italic;">P1ratRuleZZZ</font>&copy;</cite>
+</center>
+</body>
+</html>

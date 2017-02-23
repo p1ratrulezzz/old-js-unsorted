@@ -1,0 +1,245 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251" />
+  <title>
+	Счетчик пар v2.1
+  </title>
+  <style type="text/css">
+  .main {background-color:gray;border:solid 3px white;}
+  body {background-color:black;color:white;}
+  .minibutton {width:2px;height:15px;position:relative;font-size:8px;}
+td {width:20px;}  
+</style>
+</head>
+<body>
+
+<table class="main" cellpadding="3px" cellspacing="3px">
+	<tr>
+		<td>Время:</td>
+		<td id="clock" width="100px">00:00:00</td>
+	</tr>
+	<tr>
+		<td  id="para_name">Пара:</td>
+		<td id="para" width="100px">Нету</td>
+	</tr>
+	<tr>
+		<td id="para_type">Сейчас:</td>
+		<td id="TimeString" width="100px">00:00:00</td>
+	</tr>
+	<tr>
+		<td>
+		</td>
+		<td>
+			<input type="checkbox" id="showMseconds">миллисекуды</input>
+		</td>
+	</tr>
+	<tr>
+		<td>Время обновления</td>
+		<td>
+			<input id="updateTime" value="1000" size="3" disabled />
+			<!--
+			<input class="minibutton" onKeyUp="" type="button" style="top:-8px;" value="+" onClick='updateTimeChange("+")' />
+			<input class="minibutton" onKeyUp="" type="button" style="top:8px;left:-22px;" value="-" onClick='updateTimeChange("-")' />
+			-->
+			<input onKeyUp="" type="button"  value="+" onClick='updateTimeChange("+")' />
+			<input onKeyUp="" type="button"  value="-" onClick='updateTimeChange("-")' />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			Таймер:
+		</td>
+		<td>
+			<input type="button" onKeyUp="" id="engine" value="Engine" onClick="engine()" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			Сменить расписание:
+		</td>
+		<td>
+			<select id="timetable">
+				<option value="0" id="timetable_0">Суббота</option>
+				<option value="1" id="timetable_1">Бирюлево</option>
+				<option value="2" id="timetable_2">Нахимовский</option>
+			</select><br /><input type="checkbox" id="changer">Переключить</input>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">
+sym = ":";
+sym_counter=1;
+function ChangeSym()
+{
+	if(arguments[0]) sym_counter=1;
+	if(sym_counter>arguments.length-1) sym_counter=1;
+	sym = arguments[sym_counter++];
+}
+engine_mode=0;
+function TimeCounter()
+{
+	
+	var set=true;
+	var m = new Date();
+	m.setMinutes(m.getMinutes()+1);
+	var day = m.getDay();
+	var Days = [-1,2,-1,1,2,1,0];
+	if(document.getElementById("changer").checked) {timetable=parseInt(document.getElementById("timetable").value);}
+	else timetable = Days[day];
+	switch(timetable)
+	{
+		case 0: //суббота
+			var hours = [[7,8],[9,10],[10,11],[12,13],[13,14],[14,16],[15,17]];
+			var minutes = [[35,55],[0,20],[30,50],[5,25],[30,50],[55,15],[20,40]];
+		break;
+		case 1: //бирюлёво
+			var hours = [[7,8],[9,10],[10,11],[12,13],[13,15],[15,16],[16,17]];
+			var minutes = [[35,55],[0,20],[30,50],[15,35],[40,0],[5,25],[30,50]];
+		break;
+		default://нахимовский
+			var hours = [[7,8],[9,10],[10,11],[12,13],[14,15],[15,17],[17,18]];
+			var minutes = [[35,55],[0,20],[30,50],[35,55],[25,45],[50,10],[15,35]];
+		
+			
+
+	}
+	
+	//alert(day)
+	if(Days[day]==-1 && set  && !document.getElementById("changer").checked)
+	{
+		document.getElementById("para").innerHTML="Выходной";
+		document.getElementById("TimeString").innerHTML="Выходной";
+		
+		set=false;
+	}
+	var hrs = m.getHours();
+	var mins = m.getMinutes();
+	var secs = m.getSeconds();
+	//alert(hrs+":"+mins)
+	if((hours[0][0]*60+minutes[0][0]>mins+hrs*60 || hours[6][1]*60+minutes[6][1]<mins+hrs*60)  && set)
+	{
+		document.getElementById("para").innerHTML="Не идет";
+		document.getElementById("TimeString").innerHTML="Не идет";
+		
+		set=false;
+	}
+	//alert((hours[0][0]+minutes[0][0]*60)+" "+(mins*60+hrs))
+	var peremena = -1;
+	var para = -1;
+  var tmp=0;
+	for(var i=0;i<hours.length;i++)
+	{
+ tmp=hrs*60+mins;
+		if
+		(
+			tmp>=hours[i][0]*60+minutes[i][0] 
+					&&
+tmp<=hours[i][1]*60+minutes[i][1]
+			
+		) 
+		{
+			para=i;
+			break;
+		}
+		else if(i<hours.length-1)
+		{
+			
+			
+			if(tmp>=hours[i][1]*60+minutes[i][1] &&  tmp<=hours[i+1][0]*60+minutes[i+1][0]) 
+			{
+				peremena=i;
+				break;
+			}
+			
+		}
+	}
+	
+	
+	//alert(peremena)
+Clock();
+if(set)
+	{
+		document.getElementById("para").innerHTML=para==-1 ? String(peremena)+"<sup>-ая</sup>" : String(para)+"<sup>-ая</sup>";
+		//m.setSeconds(0,0);
+		var now = m.valueOf();
+var ob=document.getElementById("para_name");
+	var ob2=document.getElementById("para_type");		
+		if(para==-1)
+		{
+			ob.innerHTML = "Перемена";
+			ob2.innerHTML = "До начала осталось:";
+			m.setHours(hours[peremena+1][0]);
+			m.setMinutes(minutes[peremena+1][0]);
+		}
+		else
+		{
+			
+	ob.innerHTML = "Пара";
+	ob2.innerHTML = "До конца осталось:";
+			m.setHours(hours[para][1]);
+			m.setMinutes(minutes[para][1]);
+		}
+		m.setSeconds(60,1000);
+		var est = m.valueOf() - now;
+		var ehours=Math.floor(est/(60*60*1000));
+		est-=ehours*60*60*1000;
+		var eminutes=Math.floor(est/(60*1000));
+		est-=eminutes*60*1000;
+		var eseconds=Math.floor(est/(1000));
+		est-=eseconds*1000;
+		if(String(est).length==2)
+		{
+			est="0"+est;
+		}
+		else if(String(est).length==1) est="00"+est;
+		var TimeString = (ehours<10 ? "0"+ehours : ehours)+sym+(eminutes<10 ? "0"+eminutes : eminutes)+sym+(eseconds<10 ? "0"+eseconds : eseconds)+(document.getElementById("showMseconds").checked ? sym+est : "");
+		document.getElementById("TimeString").innerHTML=TimeString;
+	}
+	if(engine_mode==1) setTimeout("TimeCounter()",parseInt(document.getElementById("updateTime").value));
+}
+function Clock()
+{
+	var m = new Date();
+	var hours = m.getHours();
+	var minutes = m.getMinutes();
+	var seconds = m.getSeconds();
+	var msec = m.getMilliseconds();
+	if(String(msec).length==2)
+	{
+		msec="0"+msec;
+	}
+	else if(String(msec).length==1) msec="00"+msec;
+	document.getElementById("clock").innerHTML=(hours<10 ? "0" : "")+hours+sym+(minutes<10 ? "0" : "")+minutes+sym+(seconds<10 ? "0" : "")+seconds+(document.getElementById("showMseconds").checked ? sym+msec : "");
+	//setTimeout("Clock()",parseInt(document.getElementById("updateTime").value));
+}
+function engine()
+{
+		engine_mode=engine_mode==0 ? 1 : 0;
+		if(engine_mode==1) TimeCounter();
+		//Clock();
+		document.getElementById("engine").value=engine_mode==0 ? "Старт" : "Стоп";
+}
+//setInterval('ChangeSym(false,":"," ")',100);
+function updateTimeChange(how)
+{
+	var ob=document.getElementById("updateTime");
+	if(how=="+")
+	{
+		if(ob.value<2000) ob.value=parseInt(ob.value)+100;
+	}
+	else 
+	{
+		if(ob.value>0) ob.value-=100;
+		
+	}
+}
+</script>
+<script type="text/javascript">
+engine();
+
+</script>
+<center>
+	<cite>by <font style="font-family:Georgia, Tahoma, Arial;color:red;fint-weight:bold;font-decoration:italic;">P1ratRuleZZZ</font>&copy;</cite>
+</center>
+</body>
+</html>

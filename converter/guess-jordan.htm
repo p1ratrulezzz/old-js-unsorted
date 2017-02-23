@@ -1,0 +1,122 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+
+<title>Решатель СЛАУ методом Гаусса-Жордана</title>
+<style type="text/css">
+  .main {background-color:gray;border:solid 3px white;}
+  body {background-color:black;color:white;}
+  .minibutton {width:2px;height:15px;position:relative;font-size:8px;}
+  .minitable {width:65px;}
+td {width:20px;}  
+</style>
+<script type="text/javascript" src="js/functions.js">
+</script>
+</head>
+<body>
+
+<center>Решатель СЛАУ методом Гаусса-Жордана</center>
+<table class="main">
+	<caption>Начальная матрица(система)</caption>
+	<tr>
+		<td>a<sub style="font-size:10;">1</sub>:<input size="3" name="mat" value=""  /></td>
+		<td>b<sub style="font-size:10;">1</sub>:<input size="3" name="mat" value=""  /></td>
+		<td>c<sub style="font-size:10;">1</sub>:<input size="3" name="mat" value=""  /></td>
+		<td>d<sub style="font-size:10;">1</sub>:<input size="3" name="mat" value=""  /></td>
+	</tr>
+	<tr>
+		<td>a<sub style="font-size:10;">2</sub>:<input size="3" name="mat" value=""  /></td>
+		<td>b<sub style="font-size:10;">2</sub>:<input size="3" name="mat" value=""  /></td>
+		<td>c<sub style="font-size:10;">2</sub>:<input size="3" name="mat" value=""  /></td>
+		<td>d<sub style="font-size:10;">2</sub>:<input size="3" name="mat" value=""  /></td>
+	</tr>
+	<tr>
+		<td>a<sub style="font-size:10;">3</sub>:<input size="3" name="mat" value=""  /></td>
+		<td>b<sub style="font-size:10;">3</sub>:<input size="3" name="mat" value=""  /></td>
+		<td>c<sub style="font-size:10;">3</sub>:<input size="3" name="mat" value=""  /></td>
+		<td>d<sub style="font-size:10;">3</sub>:<input size="3" name="mat" value=""  /></td>
+	</tr>
+	<tr>
+		<td>Знаков после запятой:</td>
+		<td>
+			<input id="updateTime" value="3" size="3" disabled />
+			<!--
+			<input class="minibutton" onKeyUp="" type="button" style="top:-8px;" value="+" onClick='updateTimeChange("+")' />
+			<input class="minibutton" onKeyUp="" type="button" style="top:8px;left:-22px;" value="-" onClick='updateTimeChange("-")' />
+			-->
+			
+			
+		</td>
+		<td>
+			<input onKeyUp="" type="button"  value="+" onClick='updateTimeChange("+")' />
+		</td>
+		<td>
+			<input onKeyUp="" type="button"  value="-" onClick='updateTimeChange("-")' />
+		</td>
+	</tr>
+	<tr>
+		<td>Ответы:</td>
+		<td name="answer">0</td>
+		<td name="answer">0</td>
+		<td name="answer">0</td>
+	</tr>
+	
+</table>
+
+<input type="button" id="kutak" value="Решить" /><br />
+Решение:<br /><font id="resh" style="background-color:gray;color:white;"></font>
+<script type="text/javascript">
+function updateTimeChange(how)
+{
+	var ob=document.getElementById("updateTime");
+	if(how=="+")
+	{
+		if(ob.value<15) ob.value=parseInt(ob.value)+1;
+	}
+	else 
+	{
+		if(ob.value>-1) ob.value-=1;
+		
+	}
+}
+function check_fields()
+{
+	var get = document.getElementsByName("mat");
+	for(var i=0;i<=get.length-1;i++)
+	{
+		if(get[i].value=="" || isNaN(get[i].value)) return false;
+	}
+	return true;
+}
+document.getElementById("kutak").onclick=function()
+{
+	if(!check_fields()) {alert("Вы не указали некоторые данные или они указаны неверно.");return;}
+	var cop = new Array(new Array(4),new Array(4),new Array(4));
+	var get = document.getElementsByName("mat");
+	if(get[0].value==0) {alert("Первый элемент не может быть нулем.Переставьте строки или столбцы");return;}
+	var g=0;
+	var st=0;
+	for(var i=0;i<=get.length-1;i++,g++)
+	{
+		if(g>=4)
+		{
+			g=0;
+			st++;
+		}
+		cop[st][g]=parseFloat(get[i].value);
+		
+	}
+	cop = guess_jordan(cop,parseInt(document.getElementById("updateTime").value));
+	var answers=document.getElementsByName("answer");
+	var types=["x","y","z"];
+	for(var i=0;i<=answers.length-1;i++) answers[i].innerHTML=types[i]+" = "+cop[2][i];
+	//alert(cop[1])
+	document.getElementById("resh").innerHTML=cop[1];
+	//alert(cop);
+}
+</script>
+<center>
+	<cite>by <font style="font-family:Georgia, Tahoma, Arial;color:red;fint-weight:bold;font-decoration:italic;">P1ratRuleZZZ</font>&copy;</cite>
+</center>
+</body>
+</html>

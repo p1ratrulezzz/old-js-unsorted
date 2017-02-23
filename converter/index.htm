@@ -1,0 +1,196 @@
+<html>
+<head>
+<title>Конвертер систем счисления(исчисления)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<meta name="Description" content="Конвертер систем счисления(исчисления) by P1ratRuleZZZ 1.0.2 PreRelease">
+<meta name="Autor" content="P1ratRuleZZZ">
+<meta name="Keywords" content="Конвертер систем счисления(исчисления), перевод дробей в другие системы счисления, перевод систем счисления, информатика, метод горнера">
+<style>
+body {background-color:black;color:white;font-family:Tahoma, Georgia, Arial;}
+.main {background-color:gray;border:solid 3px white;}
+.dig {width:75px;}
+</style>
+</head>
+<body>
+<script type="text/javascript" src="js/functions2.js">
+</script>
+<center>
+<table class="main">
+<caption>
+
+	Конвертер систем счисления 1.0.2 PreRelease<br />
+	(работает с дробями)
+</caption>
+<tr>
+	<td align=center>Исходные:</td>
+	<td align=center>Результирующие:</td>
+</tr>
+<tr>
+	<td>
+
+		<table>
+			<tr>
+				<td>
+					Число:
+				</td>
+				<td>
+					<input class="dig" id="dFrom" /> |
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					Система:
+				</td>
+				<td>
+					<select id="sFrom">
+						
+					</select>        |
+					
+				</td>
+			</tr>
+
+			<tr>
+				<td style="height:+20;">
+				</td>
+				
+				
+			</tr>
+		</table>
+	</td>
+	<td>
+		<table>
+			<tr>
+
+				<td>
+					Число:
+				</td>
+				<td>
+					<input class="dig" id="result" /> 
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Система:
+				</td>
+
+				<td>
+					<select id="sTo">
+						
+					</select>
+					<span id="hexUpSpan" style="visibility:hidden;">
+						<input type="checkbox" id="hexUp">(Большие буквы)</input>
+					</span>
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					Округлять до:
+				</td>
+				<td>
+					<input id="fixedSize" size="2" value=4 />
+				</td>
+			</tr>
+		</table>
+
+	</td>
+</tr>
+<tr>
+	<td align=center>
+		<input type="button" id="process_button" value="Преобразовать" />
+	</td>
+	<td>
+		<input type="button" id="clear_button" value="Очистить" />
+	
+		<input type="button" id="swap_button" value="Поменять местами" />
+	</td>
+
+</tr>
+<tr><td>
+	<table id="count_table">
+		
+	</table>
+</td></tr>
+</table>
+</center>
+
+<center>
+	<font style="color:red;font-weight:bold;">By P1ratRuleZZZ&copy </font>
+</center>
+<script type="text/javascript">
+dFrom = new Object(document.getElementById("dFrom"));
+result = new Object(document.getElementById("result"));
+sTo = new Object(document.getElementById("sTo"));
+sFrom = new Object(document.getElementById("sFrom"));
+process_button = new Object(document.getElementById("process_button"));
+clear_button = new Object(document.getElementById("clear_button"));
+hexUp = new Object(document.getElementById("hexUp"));
+hexUpSpan = new Object(document.getElementById("hexUpSpan"));
+count_table = new Object(document.getElementById("count_table"));
+fixedSize = new Object(document.getElementById("fixedSize"));
+swap_button = new Object(document.getElementById("swap_button"));
+sTo.innerHTML="";
+sFrom.innerHTML=""
+
+for(var i=2;i<=34;i++)
+{
+	sTo.innerHTML+='<option id="sTo_'+i+'" value='+i+'>'+i+'</option>';
+	sFrom.innerHTML+='<option id="sFrom_'+i+'" value='+i+'>'+i+'</option>';
+	//sFrom.innerHTML+='<option id="sRes_'+i+'" value='+i+'>'+i+'</option>';
+}
+
+document.getElementById("sTo_2").selected=true;
+document.getElementById("sFrom_10").selected=true;
+swap_button.onclick=function()
+{
+	
+	var tmp = new Array(dFrom.value,sFrom.value);
+	
+	dFrom.value = result.value;
+	result.value = tmp[0];
+	document.getElementById("sFrom_"+sTo.value).selected=true;
+	document.getElementById("sTo_"+tmp[1]).selected=true;
+	
+}
+result.onfocus=function()
+{
+	this.focus();
+	this.select();
+}
+clear_button.onclick=function()
+{
+	dFrom.value = result.value="";
+	count_table.innerHTML="";
+}
+process_button.onclick=function()
+{
+	if(dFrom.value=="" || dFrom.value==0)
+	{
+		dFrom.value=0;
+		result.value=0;
+		return;
+	}
+	var res = ConvertSys(dFrom.value,sFrom.value,sTo.value,(hexUp.checked==1 ? true : false),parseInt(fixedSize.value));
+	if(!res) res=new Array("Ошибка",new Array(""));
+	result.value=res[0];
+	count_table.innerHTML="";
+	
+	for(var i=0;i<res[1][0].length;i++)
+	{
+		count_table.innerHTML+="<tr><td>"+res[1][0][i]+"</td><td>|</td><td>"+sTo.value+"</td><td>|</td><td>"+res[1][1][i]+"</td></tr>";
+	}
+	
+	
+	//count_table.innerHTML+="</tr>";
+	//alert(count_table.innerHTML);
+}	
+sTo.onchange=function()
+{
+	if(sTo.value==16) hexUpSpan.style.visibility="inherit";
+	else hexUpSpan.style.visibility="hidden";
+}
+
+</script>
+</body>
+</html>

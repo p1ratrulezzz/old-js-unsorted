@@ -1,0 +1,19 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+<style>
+body {background-color:black;color:white;font-family:Tahoma, Georgia, Arial;}
+.main {background-color:gray;border:solid 3px white;}
+.dig {width:75px;}
+</style>
+</head>
+<body>
+<input id="god" />
+<input type="button" onClick='alert("\r\n"+f(parseFloat(god.value)));' />
+<script type="text/javascript">
+function f(x)
+{
+return Math.pow(x,3)+2*x+4;
+}
+</script>
+</body></html>

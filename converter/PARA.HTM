@@ -1,0 +1,124 @@
+<html>
+<head>
+<style type="text/css">
+body {font-family:Arial, Georgia, Times New Roman, Tahoma}
+.light {border:groove 3px navy;}
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+</head>
+<body bgcolor=black onLoad="para()" text=white>
+<table style="border:groove 3px green" width=20 color=gray>
+<tr style="background-color:red;"><td class="light"><font color=navy>Ceйчac:</font></td><td class="light"><span id="what" size=8></span></td></tr>
+<tr><td class="light" bgcolor=navy><font color=white>Пapa:</font></td><td class="light"><span id="para" size=8></span></td></tr> 
+<tr style="background-color:red;"><th>Дo кoнцa</th><td> ocтaлocь</td></tr>
+<tr><td bgcolor=navy><font color=white>Чacoв:</font></td><td><span id="phours" size=8></span></td></tr> 
+<tr><td bgcolor=navy><font color=white>Mинyт:</font></td><td><span id="pminutes" size=8></span></td></tr> 
+<tr><td bgcolor=navy><font color=white>Ceкyнд:</font></td><td><span id="pseconds" size=8></span></td></tr> 
+<tr><td bgcolor=navy><font color=white>Mиллиceкyнд:</font></td><td><span id="pmsec" size=8></span></td></tr> 
+</table>
+<script language=JavaScript>
+function para() {
+var n = new Date();
+var day = n.getDay();
+if(day==0) day=7;
+var date = n.getDate();
+var hours = n.getHours();
+var month = n.getMonth();
+var year = n.getFullYear();
+var minutes = n.getMinutes();
+var seconds = n.getSeconds();
+var msec = n.getMilliseconds();
+var time = hours*60+minutes;
+var para = "Heтy пapы";
+var hrs1 = new Array(7,9,10,12,14,15,17);
+var min1 = new Array(35,0,30,35,25,50,15);
+var hrs2 = new Array(8,10,11,13,15,17,18);
+var min2 = new Array(55,20,50,55,45,10,35); 
+if(day==6) {
+min1[3]=5;
+min1[4]=30;
+min1[5]=55;
+min1[6]=20;
+hrs1[4]=13;
+hrs1[5]=14;
+hrs1[6]=16;
+hrs2[4]=14;
+hrs2[5]=16;
+hrs2[6]=17;
+min2[3]=25;
+min2[4]=50;
+min2[5]=15;
+min2[6]=40;
+}
+if((day==3)||(day==5)) {
+hrs1[4]=13;
+hrs1[5]=15;
+hrs1[6]=16;
+hrs2[5]=16;
+hrs2[6]=17;
+min1[3]=15;
+min1[4]=40;
+min1[5]=5;
+min1[6]=30;
+min2[3]=35;
+min2[4]=00;
+min2[5]=25;
+min2[6]=50;
+}
+
+
+var max = new Array(6,"Bыxoднoй",6,6,6,6,6,"Bыxoднoй");
+var today = new Date(year,month,date);
+var mday = new Date(year,6,1);
+if(today>mday) mday=new Date(year+1,6,1);
+var how = Math.floor((mday - today)/(1000*60*60*24));
+if(day!=1) how=how+(day-1);
+var what="Чиcлитeль";
+if(how/7==Math.floor(how/7)) what="Знaмeнaтeль";
+var i=0;
+if((day==2)|(day==7)) {
+i=7;
+para=max[7];
+}
+while(i!=7) {
+
+first = hrs1[i]*60+min1[i];
+second = hrs2[i]*60+min2[i];
+if(time>=first) {
+if(time<=second) {
+para=i;
+break;
+}
+}
+else {
+if(time<=hrs2[6]*60+min2[6]) {
+para=" Пepeмeнa ";
+}
+}
+i++;
+}
+pminutes = ptime = pseconds =  phours = "Пapы нeт";
+ 
+if(para>=0) {
+var now = new Date(year,month,date,hours,minutes,seconds,msec);
+var tmp = new Date(year,month,date,hrs2[para],min2[para])
+var ptime = tmp - now;
+var phours = Math.floor(ptime/(60*1000*60));
+ptime = ptime-phours*60*1000*60;
+var pminutes = Math.floor(ptime/(1000*60));
+ptime = ptime-pminutes*60*1000;
+var pseconds = Math.floor(ptime/(1000));
+ptime = ptime - pseconds*1000;
+if(phours<0) para="Пepeмeнa";
+}
+document.getElementById("para").innerText=para;
+document.getElementById("what").innerText=what;
+document.getElementById("phours").innerText=phours;
+document.getElementById("pminutes").innerText=pminutes;
+document.getElementById("pseconds").innerText=pseconds;
+document.getElementById("pmsec").innerText=ptime;
+setTimeout("para()",1);
+}
+</script>
+</body>
+</html>

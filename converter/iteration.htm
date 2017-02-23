@@ -1,0 +1,188 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251">
+
+<title>Метод итерации и половинного деления</title>
+<style type="text/css">
+  .main {background-color:gray;border:solid 3px white;}
+  body {background-color:black;color:white;}
+  .minibutton {width:2px;height:15px;position:relative;font-size:8px;}
+  .minitable {width:65px;}
+//td {width:20px;}  
+</style>
+<script type="text/javascript" src="js/functions.js">
+</script>
+</head>
+<body>
+
+<script type="text/javascript">
+function fiter(x)
+{
+	//return -0.1-Math.pow(x,3)+0.8*x-0.4;
+	//return ((x*-0.1)*x+0.8)*x-0.4;
+}
+function f(x)
+{
+	//return Math.pow(x,3)+2*x+4;
+	//return ((x*-0.1)*x+0.8)*x-0.4;
+}
+
+function check_fields()
+{
+	var func  = document.getElementById("function").value;
+	var gorner = document.getElementById("gorner").value;
+	try
+	{
+		if(String(func.length)==0 || (String(gorner).length==0 && gi("method").value!="1")) throw("kutak");
+		eval("f = function(x){ return "+func+"}");
+		if(gi("method").value!="1") eval("fiter =function(x){ return "+gorner+"}");
+		
+		
+	}
+	catch(e)
+	{
+		return false;
+	}
+	return true;
+}
+function half_div(a,b,how,eps,sh)
+{
+	var c,fc;
+	var i=0;
+	var res= new String("<table class=\"main\"><tr style=\"background-color:red;\"><td>i</td><td>a</td><td>b</td><td>c=(a+b)/2</td><td>f(c)</td><td>Условие</td></tr>");
+		do
+		{
+			
+			c=(a+b)/2;
+			c = parseFloat(String(c).cutFloat(sh));
+			fc = String(f(c)).cutFloat(sh);
+			res+="<tr style=\"background-color:navy;\"><td>"+i+"</td><td>"+a+"</td><td>"+b+"</td><td>"+c+"</td><td>"+fc+"</td><td>"+"|"+fc+"|"+(Math.abs(fc)>eps ? ">" : (Math.abs(fc)==eps ? "=" : "<"))+eps+(Math.abs(fc)<eps ? "<br />=>exit();" : "")+"</td></tr>";
+			if(fc*f(a)<0)
+			{
+				b=c;
+			}
+			else if(fc==0) break;
+			else a=c;
+		}
+		while(Math.abs(b-a)>=eps && i++<how);
+		//alert(f(c))
+		return new Array(c,res+="</table>");
+}
+</script>
+<center>Решение способом итерации и половинного деления</center>
+<table class="main">
+	<caption>Данные</caption>
+	<tr>
+		<td>
+			Метод:
+		</td>
+		<td>
+			<select id="method">
+				<option value="0">Итерации</input></option>
+				<option value="1">Половинное деление</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>Функция(JavaScript,x - переменная):</td><td><input size="20" id="function" value="Math.pow(x,3)+2*x+4;"  /></td>
+		
+	</tr>
+	<tr id="gorner_tr">
+		<td>Схема Горнера(JavaScript,x - переменная):</td>
+		<td><input size="20" id="gorner" value="((x*-0.1)*x+0.8)*x-0.4;"  /></td>
+	</tr>
+	<tr>
+		<td>Знаки после запятой:</td>
+		<td>
+			<font id="updateTime">3</font>
+			<input onKeyUp="" type="button"  value="+" onClick='updateTimeChange("updateTime","+",15,-1,1)' />
+			<input onKeyUp="" type="button"  value="-" onClick='updateTimeChange("updateTime","-",15,-1,1)' />
+		</td>
+		
+	</tr>
+	<tr>
+		<td>Максимально итераций:</td>
+		<td>
+			<font id="max">10</font>
+			<input onKeyUp="" type="button"  value="+" onClick='updateTimeChange("max","+",100,10,10)' />
+			<input onKeyUp="" type="button"  value="-" onClick='updateTimeChange("max","-",100,10,10)' />
+		</td>
+		
+	</tr>
+	<tr>
+		<td>Точность:</td>
+		<td><input size="5" id="eps" value="0.01"  /></td>
+	</tr>
+	<tr>
+		<td id="1_dig">Первое значение:</td>
+		<td><input  size="5" id="x0" value="-1.5"  /></td>
+	</tr>
+	<tr>
+		<td>Конец отрезка:</td>
+		<td><input id="end_vector" size="5" value="0"  disabled /></td>
+	</tr>
+	<tr>
+		<td>Ответ:</td>
+		<td id="answer">0</td>
+		
+	</tr>
+	
+</table>
+
+<input type="button" id="kutak" value="Решить" /><br />
+Решение:<br /><font id="resh" style="background-color:gray;color:white;"></font>
+<script type="text/javascript">
+
+function updateTimeChange(sid,how,max,min,step)
+{
+	var ob=document.getElementById(sid);
+	//alert(parseInt(ob.innerHTML));
+	if(how=="+")
+	{
+		if(parseInt(ob.innerHTML)<max) ob.innerHTML=parseInt(ob.innerHTML)+step;
+	}
+	else 
+	{
+		if(parseInt(ob.innerHTML)>min) ob.innerHTML-=step;
+		
+	}
+}
+document.getElementById("kutak").onclick=function()
+{
+	if(!check_fields()) {alert("Ошибка синтаксиса или не введены некоторые данные");return;}
+	switch(gi("method").value)
+	{
+		case "1":
+		var cop = half_div(parseFloat(document.getElementById("x0").value),parseFloat(gi("end_vector").value),parseInt(document.getElementById("max").innerHTML),parseFloat(document.getElementById("eps").value),parseInt(document.getElementById("updateTime").innerHTML));
+		break;
+		default:
+		var cop = iteration(parseFloat(document.getElementById("x0").value),parseInt(document.getElementById("max").innerHTML),parseFloat(document.getElementById("eps").value),parseInt(document.getElementById("updateTime").innerHTML));
+	}
+	document.getElementById("answer").innerHTML=cop[0];
+	document.getElementById("resh").innerHTML=cop[1];
+}
+
+gi("method").onchange=function()
+{
+	var val = gi("method").value;
+	
+	switch(val)
+	{
+		case "1":
+			gi("gorner").disabled=true;
+			gi("end_vector").disabled=false;
+			gi("1_dig").innerHTML="Начало отрезка";
+		break;
+		default:
+			gi("gorner").disabled=false;
+			gi("end_vector").disabled=true;
+			gi("1_dig").innerHTML="Первое значение";
+			//gi("gorner_tr").style.visibility="hidden";
+	}
+}
+</script>
+<center>
+	<cite>by <font style="font-family:Georgia, Tahoma, Arial;color:red;fint-weight:bold;font-decoration:italic;">P1ratRuleZZZ</font>&copy;</cite>
+</center>
+</body>
+</html>
