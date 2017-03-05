@@ -1,0 +1,780 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1251" />
+<title></title>
+<script type="text/javascript">
+//User Settings
+var SwitchWeekTypes = false;		//Switch Week Types false=(Numerator and then Denominator); true=(Denominator and then Numerator)
+
+
+
+//User Settings End
+</script>
+</head>
+<body>
+
+<div align="center">Счетчик пар v2.8</div>
+	
+	<style type="text/css">
+		.main1 {border:solid 1px RGB(220,220,220);}
+		//white;}
+		.minibutton {width:2px;height:15px;position:relative;font-size:8px;}
+		//td {width:100px;} 
+		.secondcol {width:200px;}
+		select:disabled {color:black;border:none;background-color:white;}
+		.deleted
+		{
+			display:none;
+		}
+		.highlighted
+		{
+			color:white;
+			background-color:navy;
+		}
+	</style>
+
+
+
+<table class="main1" cellpadding="3px" cellspacing="3px">
+<col /><tr><td></col></td></tr>
+<col width="350px" /><tr><td></col></td></tr>
+	<tr>
+		<td>Время:</td>
+		<td id="clock">00:00:00</td>
+	</tr>
+	<tr>
+		<td>Неделя:</td>
+		<td name="weekType" id="weekType">weekType</td>
+	</tr>
+	<tr>
+		<td>День:</td>
+		<td>
+        	<div id="day_name_block" class="deleted">
+        	  <select  id="day_name"  name="day_name">
+        	    <option style="background-color:#CFF" id="day_name_auto" value="auto">Автоматически</option>
+        	    <option id="day_name[1]" value="1" />Понедельник</option>           
+        	    <option id="day_name[2]" value="2" />Вторник</option>           
+        	    <option id="day_name[3]" value="3" />Среда</option>           
+        	    <option id="day_name[4]" value="4" />Четверг</option>           
+        	    <option id="day_name[5]" value="5" />Пятница</option>            
+        	    <option id="day_name[6]" value="6" />Суббота</option>             
+        	    <option id="day_name[0]" value="0" />Воскресенье</option>              
+        	    
+			
+      	    </select>
+       	  </div>
+            <div id="day_change_block">
+				<a id="day_change" href="javascript:" style="color:navy;">day_change</a>
+            </div>
+	  </td>
+	</tr>
+	<tr>
+		<td name="lesson_title" id="lesson_title">lesson_title</td>
+		<td>
+        	<div id="lesson_block">
+        		<a href="javascript:" name="lesson" id="lesson" title="Посмотреть расписание">lesson</a>
+            </div>
+            
+            <div class="deleted" id="lessons_block">
+            	<table rules="all" id="lessons_timetable" style="width:100%;border:1px black solid;">
+                	<col width="10%" />
+                    <col width="70%"/>
+                    <col width="20%" />
+                    <thead style="background-color:#CCC">
+                	<tr style="border-bottom:solid black 5px;">
+                    	<td>Номер</td>
+                        <td>Название</td>
+                        <td>
+                        	<table>
+                            <tr>
+                                <td align="left">Время</td>
+                                <td width="100%" align="right" style="text-align:right">
+                              
+                            		<span id="btn_close_timetable" style="cursor:pointer;border:1px solid black;font-size:16pt;color:red;">X</span>
+                                </td>
+                            </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    </thead>
+                    <tbody id="lessons_table_content">
+                    </tbody>
+                </table>
+            </div>
+        </td>
+	</tr>
+	<tr>
+		<td  id="para_name">Пара:</td>
+		<td id="para">Нету</td>
+	</tr>
+	<tr>
+		<td id="para_type">Сейчас:</td>
+		<td id="TimeString">00:00:00</td>
+	</tr>
+	<tr>
+		<td>
+		</td>
+		<td>
+			<input type="checkbox" id="showMseconds" />миллисекуды
+		</td>
+	</tr>
+	<tr>
+		<td>Время обновления</td>
+		<td>
+			<table>
+            <tr>
+            	<td id="updateTime" size="3">
+                	1000
+                 </td>
+                 <td>
+            
+                    <!--
+                    <input class="minibutton" onKeyUp="" type="button" style="top:-8px;" value="+" onClick='updateTimeChange("+")' />
+                    <input class="minibutton" onKeyUp="" type="button" style="top:8px;left:-22px;" value="-" onClick='updateTimeChange("-")' />
+                    -->
+                    <input onkeyup="" type="button" value="+" onclick="updateTimeChange(&quot;+&quot;)" />
+                    <input onkeyup="" type="button" value="-" onclick="updateTimeChange(&quot;-&quot;)" />
+                 </td>
+            </tr>
+            </table>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			Таймер:
+		</td>
+		<td>
+			<input type="button" onkeyup="" id="engine" value="Engine" onclick="engine()" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			Сменить расписание:
+		</td>
+		<td>
+        	<div id="timetable_block" class="deleted">
+			<select id="timetable">
+            	<option value="-1" id="timetable_disable">Выключено</option>
+				<option value="0" id="timetable_0">Суббота</option>
+				<option value="1" id="timetable_1">Бирюлево</option>
+				<option value="2" id="timetable_2">Нахимовский</option>
+				<option value="3" id="timetable_3">Сокращенный день</option>
+			</select>
+           	</div>
+            <div id="timetable_change_block">
+            	<a href="javascript:" id="timetable_change">timetable_change</a>
+            </div>
+	
+		</td>
+	</tr>
+	<!--<tr>
+		<td colspan="2">
+			<div id="gay_id">gay</div>
+		</td>-->
+
+</table>
+<script type="text/javascript">
+function ge(id) {return Object(document.getElementById(id));}
+//Constants
+BIBL_DAY=-3;
+NAHIM=-2;
+WEEKEND=-1;
+SATURDAY=0;
+BIRULEVO=1;
+SHORT_DAY=3;
+
+//Constants end
+
+String.prototype.asClockDigit = function()
+{
+	if(isNaN(this))
+		return NaN;
+	return (Number(this)<10 ? "0"+this : this);
+}
+ge("btn_close_timetable").onclick=function()
+{
+	ge("lessons_block").className="deleted";
+	ge("lesson_block").className="";
+}
+ge("lesson").onclick = function(e,noShow)
+{
+	
+	if(!noShow || noShow==undefined)
+	{
+		
+		ge("lessons_block").className="";
+		ge("lesson_block").className="deleted";
+	}
+	
+	var o 
+	try
+	{
+		o = ge("lessons_table_content");
+		if(o!=null) 
+			ge("lessons_timetable").removeChild(o);
+	}
+	catch(e) {}
+	o = document.createElement("tbody");
+	o.style.backgroundColor="#DCF59A";
+	o.style.border="1px black solid";
+	o.id="lessons_table_content";
+	for(var i=0;i<Lessons[day].length;i++)
+	{
+		var trel = document.createElement("tr");
+		var tdel = new Array();
+		trel.setAttribute("name","lessons_tr");
+		
+		for(var g=0;g<3;g++)
+		{
+			tdel[g] = document.createElement("td");
+			trel.appendChild(tdel[g]);
+			
+		}
+		tdel[0].innerHTML = i;
+		if(Days[day]==BIBL_DAY)
+		{
+			tdel[1].innerHTML="БИБЛИОТЕЧНЫЙ ДЕНЬ";
+			tdel[1].style.backgroundColor="green";
+		}
+		else if(Days[day]==WEEKEND)
+		{
+			tdel[1].innerHTML="Выходной";
+			tdel[1].style.backgroundColor="gray";
+		}
+		else
+		{
+		
+			if(Lessons[day][i][1]!="")
+			{
+				var table = document.createElement("table");
+				var tr1 = document.createElement("tr");
+				var tr2 = document.createElement("tr");
+				var td1 = document.createElement("td");
+				var td2 = document.createElement("td");
+				
+				//table.style.tableLayout="fixed";
+				table.style.borderStyle="hidden";
+				table.setAttribute("width","100%");
+				table.setAttribute("height","100%");
+				
+				td1.innerHTML = Lessons[day][i][0];
+				td2.innerHTML = Lessons[day][i][1];
+				td1.style.height="100%";
+				td2.style.height="100%";
+				
+				td1.setAttribute("width","100%");
+				td2.setAttribute("width","100%");
+
+				tr1.setAttribute("height","40px");
+				tr2.setAttribute("height","40px");
+				
+
+				td1.style.width="100%";
+				td2.style.width="100%";
+				
+				//tr1.setAttribute("height","50%");
+				//tr2.setAttribute("height","50%");
+				
+				tr1.style.border="1px black solid";
+				tr2.style.border=tr1.style.border;
+				table.setAttribute("rules","rows");
+				table.style.borderSize="0px;";
+				table.appendChild(tr1);
+				table.appendChild(tr2);
+				tr1.appendChild(td1);
+				tr2.appendChild(td2);
+				tdel[1].appendChild(table);
+			}
+			else
+			{
+				tdel[1].innerHTML=Lessons[day][i][0];
+			}
+			
+			/*tdel[1].innerHTML = "<table rules=\"rows\"><tr><td width=\"100%\">"+Lessons[day][i][0]+"</td></tr>"+"<tr><td width=\"100%\">"+Lessons[day][i][1]+"</td></tr></table>";
+		}*/
+		
+		}
+		tdel[2].innerHTML = String(hours[i][0]).asClockDigit()
+								+":"+
+							String(minutes[i][0]).asClockDigit()
+								+"-"+
+							String(hours[i][1]).asClockDigit()
+								+":"+
+							String(minutes[i][1]).asClockDigit();
+		
+		trel.style.border="1px black solid";
+		
+		if((para==i && para!=-1 && peremena==-1) || (peremena+1==i  && para==-1 && peremena!=-1)) 
+		{
+			var hl = trel.getElementsByTagName("table")[0]!=undefined ? (weekType==0 ? tr1 : tr2) : false;
+			//trel.style.backgroundColor="navy";
+			//trel.style.color="white";
+			tdel[1].style.backgroundColor="";
+			if(hl!==false)
+			{
+				hl.className="highlighted";
+				tdel[0].className="highlighted";
+				tdel[2].className="highlighted";
+			}
+			else
+			{
+				trel.className="highlighted";
+			}
+			
+		}
+		
+		o.appendChild(trel);
+	}
+	
+	ge("lessons_timetable").appendChild(o);
+	
+	
+}
+
+
+ge("timetable_change").onclick = function()
+{
+	ge("timetable_block").className="";
+	ge("timetable_change_block").className="deleted";
+	ge("timetable").size=ge("timetable").options.length;
+}
+ge("timetable").onchange = ge("timetable").onclick = function(disable)
+{
+	if(disable!==undefined && disable)
+	{
+		
+		this.value="disable";
+	}
+	ge("timetable_change").innerHTML=this.item((this.value>=0 ? Number(this.value)+1 : 0)).innerHTML;
+	ge("timetable_block").className="deleted";
+	ge("timetable_change_block").className="";
+	ChangeTimetable();
+}
+
+
+
+ge("day_change").onclick=function()
+{	
+
+	ge("day_name_block").className="";
+	ge("day_change_block").className="deleted";
+	//ge("day_name").focus();
+	ge("day_name").size=ge("day_name").length;
+	
+	
+}
+ge("day_name").onclick = ge("day_name").onchange =function(setToday)
+{
+	
+	if(setToday===true && setToday!=undefined)
+	{
+		this.value=new Date().getDay();
+		
+	}
+	else if(this.value=="auto")
+	{
+		this.onchange(true);
+		this.size=1;
+		return;
+	}
+	ge("day_change").innerHTML=this.options[this.selectedIndex].innerHTML;
+	ge("day_name_block").className="deleted"
+	ge("day_change_block").className="";
+	
+	day=this.value;
+	if(hours.length>0 && minutes.length>0 && ge("lessons_block").className!="deleted")
+		ge("lesson").onclick();
+	ChangeTimetable();
+}
+var DayNames = new Array
+(
+	"Воскресенье",
+	"Понедельник",
+	"Вторник",
+	"Среда",
+	"Четверг",
+	"Суббота"
+);
+var Lessons =
+[
+	//Воскресенье
+	[
+		new Array("",""),
+		new Array("",""),
+		new Array("",""),
+		new Array("",""),
+		new Array("",""),
+		new Array("",""),
+		new Array("","")
+	],	
+	//Понедельник
+	[
+		new Array("",""),
+		new Array("Основы делопроизводства",""),
+		new Array("Визуальное программирование",""),
+		new Array("Технология разработки программных продуктов",""),
+		new Array("Экономика отрасли",""),
+		new Array("",""),
+		new Array("","")
+	],	
+	//Вторник
+	[
+		new Array("",""),
+		new Array("",""),
+		new Array("Информационная безопасность",""),
+		new Array("Физическая культура",""),
+		new Array("Основы построения автоматизированных информ.сиистем",""),
+		new Array("Основы делопроизводства","Правовое обеспечение проф  деятельности"),
+		new Array("","")
+		
+	],	
+	//Среда
+	[
+	 	new Array("",""),
+		new Array("Иностранный язык 1 п/гр",""),
+		new Array("Разработка и эксплуатация удалённых баз данных",""),
+		new Array("Этика и психология проф. деятельности","Математические методы"),
+		new Array("Математические методы (Курсовой проект)",""),
+		new Array("Технология мультимедиа"," "),
+		new Array("","")
+	],
+	//Четверг	
+	[
+	 	new Array("",""),
+		new Array(" ","Информационная безопасность"),
+		new Array("Разработка и эксплуатация удалённых БД","Экономика отрасли"),
+		new Array("Технология мультимедиа",""),
+		new Array("Экономика отрасли","Технология разработки программных продуктов"),
+		new Array("Иностранный язык 2 п/гр"," "),
+		new Array("","")
+	],	
+	//Пятница
+	[
+		new Array("",""),
+		new Array("Математические методы",""),
+		new Array("Программное обеспечение компьютерных сетей",""),
+		new Array("Этика и психология профессиональной деятельности",""),
+		new Array("",""),
+		new Array("",""),
+		new Array("","")
+	],	
+	//Суббота
+	[
+		new Array("",""),
+		new Array("",""),
+		new Array("",""),
+		new Array("",""),
+		new Array("",""),
+		new Array("",""),
+		new Array("","")
+		
+	]	
+	
+];
+
+var Days = new Array
+(
+	WEEKEND, 		//Воскресенье
+	NAHIM,			//Понедельник
+	NAHIM,			//Вторник
+	NAHIM,			//Среда
+	NAHIM,			//Четверг
+	BIRULEVO,		//Пятница
+	BIBL_DAY		//Суббота
+);
+var weekTypes=new Array
+(
+	"Числитель",
+	"Знаменатель"
+);
+
+sym = ":";
+sym_counter=1;
+function ChangeSym()
+{
+	if(arguments[0]) sym_counter=1;
+	if(sym_counter>arguments.length-1) sym_counter=1;
+	sym = arguments[sym_counter++];
+}
+engine_mode=0;
+
+
+var para = -1;
+var oldPara = -1;
+var peremena = -1;
+//var hours = "";
+//var minutes = "";
+var day = -1;
+var oldDate = -1;
+var weekType = -1;
+
+function ChangeTimetable()
+{
+	var weekNum= new Date();
+	weekNum.setHours(0,0,0,0);
+	weekNum = new Date(weekNum- new Date(1970,0,1,0,0,0,0));
+	weekNum = Number(weekNum / (24*60*60*1000)).toFixed(0); 
+	weekNum = Math.round(weekNum / 7);
+	
+	weekType=weekNum % 2!=0 ? 1 : 0;
+	
+	if(SwitchWeekTypes)
+	{
+		weekType = weekType==0 ? 1 : 0;
+		
+	}
+	
+	var timetable = 0;
+	if(ge("timetable").value!=="-1") 
+	{
+			timetable=parseInt(document.getElementById("timetable").value);
+	}
+	else 
+		timetable = Days[day];
+	
+	
+	switch(timetable)
+	{
+		case SATURDAY: //суббота
+					  //0     1      2	     3       4       5       6 
+			hours 	= [[7,8],[9,10],[10,11],[12,13],[13,14],[14,16],[15,17]];
+			minutes = [[35,55],[0,20],[30,50],[5,25],[30,50],[55,15],[20,40]];
+		break;
+		case BIRULEVO: //бирюлёво
+			hours 	= [[7,8],[9,10],[10,11],[12,13],[13,15],[15,16],[16,17]];
+			minutes = [[35,55],[0,20],[30,50],[15,35],[40,0],[5,25],[30,50]];
+		break;
+		case SHORT_DAY:
+			var tmp = new Date();
+			var per = new Array();
+			per["default"] = 5;
+			per[2] = 30;
+			tmp.setHours(8,0,0,0);
+			hours 	= [];
+			minutes = [];
+			for(var i=0;i<=6;i++)
+			{
+				hours[i] 	= new Array();
+				minutes[i]	= new Array();
+				hours[i][0] = tmp.getHours();
+				minutes[i][0] = tmp.getMinutes();	
+				//(per[i]!=undefined ? per[i] : per["default"])
+				tmp.setMinutes(tmp.getMinutes()+60);
+				
+				hours[i][1] = tmp.getHours();
+				minutes[i][1] = tmp.getMinutes();
+				
+				tmp.setMinutes(tmp.getMinutes()+(per[i]!=undefined ? per[i] : per["default"]));
+				
+			}
+		break;
+		default://нахимовский
+			hours 	= [[7,8],[9,10],[10,11],[12,13],[14,15],[15,17],[17,18]];
+			minutes = [[35,55],[0,20],[30,50],[35,55],[25,45],[50,10],[15,35]];
+		
+			
+
+	}
+}
+ChangeTimetable();
+function TimeCounter()
+{
+	
+	var set=true;
+	//var m = new Date(2010,8,3,9,20,0,0);
+	var m = new Date();
+	//m.setHours(12,0,0,0);
+	
+
+	ge("weekType").innerHTML=weekTypes[weekType];
+	m.setMinutes(m.getMinutes()+1);
+	
+	day = Number(ge("day_name").value); 
+	//alert(day)
+	/*if(ge("day_name_block").className=="disable") 
+	{
+		ge("day_name["+String(day)+"]").selected=true;
+		
+		
+	}
+	else
+	{
+		day=Number(ge("day_name").value);
+		
+	}*/
+	
+	
+	
+	//ge("day_name").disabled=true;
+	ge("lesson_title").innerHTML="Предмет";
+	ge("lesson").innerHTML="Нету";
+	
+	
+	//alert(day)
+	if((Days[day]==WEEKEND || Days[day]==BIBL_DAY) && set)
+	{
+		document.getElementById("para").innerHTML=Days[day]==BIBL_DAY ? "Библ. День" : "Выходной";
+		document.getElementById("TimeString").innerHTML=Days[day]==BIBL_DAY ? "Библ. День" : "Выходной";
+		set=false;
+	}
+	var hrs = m.getHours();
+	var mins = m.getMinutes();
+	var secs = m.getSeconds();
+	
+	//alert(hrs+":"+mins)
+	if((hours[0][0]*60+minutes[0][0]>mins+hrs*60 || hours[6][1]*60+minutes[6][1]<mins+hrs*60)  && set)
+	{
+		document.getElementById("para").innerHTML="Не идет";
+		document.getElementById("TimeString").innerHTML="Не идет";
+		
+		set=false;
+	}
+	//alert((hours[0][0]+minutes[0][0]*60)+" "+(mins*60+hrs))
+	peremena = -1;
+	para = -1;
+	var tmp=0;
+	for(var i=0;i<hours.length;i++)
+	{
+		tmp=hrs*60+mins;
+		if
+		(
+			tmp>=hours[i][0]*60+minutes[i][0] 
+					&&
+			tmp<=hours[i][1]*60+minutes[i][1]
+			
+		) 
+		{
+			para=i;
+			break;
+		}
+		else if(i<hours.length-1)
+		{
+			
+			
+			if(tmp>=hours[i][1]*60+minutes[i][1] &&  tmp<=hours[i+1][0]*60+minutes[i+1][0]) 
+			{
+				peremena=i;
+				break;
+			}
+			
+		}
+	}
+	
+	
+	//alert(peremena)
+	Clock();
+	var lesson = "Нету пары";
+	if(set)
+	{
+		document.getElementById("para").innerHTML=para==-1 ? String(peremena)+"<sup>-ая</sup>" : String(para)+"<sup>-ая</sup>";
+		//m.setSeconds(0,0);
+		var now = m.valueOf();
+		var ob=document.getElementById("para_name");
+		var ob2=document.getElementById("para_type");		
+		if(para==-1)
+		{
+			ob.innerHTML = "Перемена";
+			ob2.innerHTML = "До начала осталось:";
+			m.setHours(hours[peremena+1][0]);
+			m.setMinutes(minutes[peremena+1][0]);
+			lesson=Lessons[day][peremena+1][1]=="" ? Lessons[day][peremena+1][0] : Lessons[day][peremena+1][weekType];
+			
+			ge("lesson_title").innerHTML="След. предмет";
+		}
+		else
+		{
+			
+			ob.innerHTML = "Пара";
+			ob2.innerHTML = "До конца осталось:";
+			m.setHours(hours[para][1]);
+			m.setMinutes(minutes[para][1]);
+			//lesson=Lessons[day][para][1]==" " ? Lessons[day][para][0] : Lessons[day][para][weekType];
+			lesson=Lessons[day][para][weekType];
+			
+			ge("lesson_title").innerHTML="Предмет";
+			
+		}
+		
+		if(lesson.trim()=="") 
+		{
+			lesson="Нету";
+		}
+		ge("lesson").innerHTML=lesson;
+		m.setSeconds(60,1000);
+		var est = m.valueOf() - now;
+		var ehours=Math.floor(est/(60*60*1000));
+		est-=ehours*60*60*1000;
+		var eminutes=Math.floor(est/(60*1000));
+		est-=eminutes*60*1000;
+		var eseconds=Math.floor(est/(1000));
+		est-=eseconds*1000;
+		if(String(est).length==2)
+		{
+			est="0"+est;
+		}
+		else if(String(est).length==1) est="00"+est;
+		var TimeString = (ehours<10 ? "0"+ehours : ehours)+sym+(eminutes<10 ? "0"+eminutes : eminutes)+sym+(eseconds<10 ? "0"+eseconds : eseconds)+(document.getElementById("showMseconds").checked ? sym+est : "");
+		document.getElementById("TimeString").innerHTML=TimeString;
+		
+		if(ge("lessons_timetable").className!="delete" && oldPara!=para)
+			ge("lesson").onclick(null,true);
+			
+		oldPara=para;
+	}
+	if(engine_mode==1) setTimeout("TimeCounter()",parseInt(ge("updateTime").innerHTML));
+	if(oldDate!=m.getDate() && oldDate!=-1)
+		ChangeTimetable();
+	oldDate=m.getDate();
+}
+function Clock()
+{
+	var m = new Date();
+	var hours = m.getHours();
+	var minutes = m.getMinutes();
+	var seconds = m.getSeconds();
+	var msec = m.getMilliseconds();
+	if(String(msec).length==2)
+	{
+		msec="0"+msec;
+	}
+	else if(String(msec).length==1) msec="00"+msec;
+	document.getElementById("clock").innerHTML=(hours<10 ? "0" : "")+hours+sym+(minutes<10 ? "0" : "")+minutes+sym+(seconds<10 ? "0" : "")+seconds+(document.getElementById("showMseconds").checked ? sym+msec : "");
+	//setTimeout("Clock()",parseInt(ge("updateTime").innerHTML));
+}
+function engine()
+{
+		engine_mode=engine_mode==0 ? 1 : 0;
+		if(engine_mode==1) TimeCounter();
+		//Clock();
+		document.getElementById("engine").value=engine_mode==0 ? "Старт" : "Стоп";
+}
+//setInterval('ChangeSym(false,":"," ")',100);
+function updateTimeChange(how)
+{
+	var ob=document.getElementById("updateTime");
+	if(how=="+")
+	{
+		if(parseInt(ob.innerHTML)<2000) ob.innerHTML=String(parseInt(ob.innerHTML)+100);
+	}
+	else 
+	{
+		if(parseInt(ob.innerHTML)>0) ob.innerHTML-=100;
+		
+	}
+}
+ge("day_name").onchange(true);
+ge("timetable").onchange(true);
+engine();
+//TimeCounter();
+
+//ge("lesson").onclick(true);
+
+</script>
+<div align="center">
+	<cite>by <font style="font-family:Georgia, Tahoma, Arial;color:red;font-weight:bold;font-style:italic;">P1ratRuleZZZ</font>&copy;</cite>
+</div>
+
+
+</body>
+</html>
