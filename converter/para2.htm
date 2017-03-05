@@ -14,7 +14,7 @@ var SwitchWeekTypes = false;		//Switch Week Types false=(Numerator and then Deno
 </head>
 <body>
 
-<div align="center">Счетчик пар v2.8</div>
+<div align="center">Г‘Г·ГҐГІГ·ГЁГЄ ГЇГ Г° v2.8</div>
 	
 	<style type="text/css">
 		.main1 {border:solid 1px RGB(220,220,220);}
@@ -40,26 +40,26 @@ var SwitchWeekTypes = false;		//Switch Week Types false=(Numerator and then Deno
 <col /><tr><td></col></td></tr>
 <col width="350px" /><tr><td></col></td></tr>
 	<tr>
-		<td>Время:</td>
+		<td>Г‚Г°ГҐГ¬Гї:</td>
 		<td id="clock">00:00:00</td>
 	</tr>
 	<tr>
-		<td>Неделя:</td>
+		<td>ГЌГҐГ¤ГҐГ«Гї:</td>
 		<td name="weekType" id="weekType">weekType</td>
 	</tr>
 	<tr>
-		<td>День:</td>
+		<td>Г„ГҐГ­Гј:</td>
 		<td>
         	<div id="day_name_block" class="deleted">
         	  <select  id="day_name"  name="day_name">
-        	    <option style="background-color:#CFF" id="day_name_auto" value="auto">Автоматически</option>
-        	    <option id="day_name[1]" value="1" />Понедельник</option>           
-        	    <option id="day_name[2]" value="2" />Вторник</option>           
-        	    <option id="day_name[3]" value="3" />Среда</option>           
-        	    <option id="day_name[4]" value="4" />Четверг</option>           
-        	    <option id="day_name[5]" value="5" />Пятница</option>            
-        	    <option id="day_name[6]" value="6" />Суббота</option>             
-        	    <option id="day_name[0]" value="0" />Воскресенье</option>              
+        	    <option style="background-color:#CFF" id="day_name_auto" value="auto">ГЂГўГІГ®Г¬Г ГІГЁГ·ГҐГ±ГЄГЁ</option>
+        	    <option id="day_name[1]" value="1" />ГЏГ®Г­ГҐГ¤ГҐГ«ГјГ­ГЁГЄ</option>           
+        	    <option id="day_name[2]" value="2" />Г‚ГІГ®Г°Г­ГЁГЄ</option>           
+        	    <option id="day_name[3]" value="3" />Г‘Г°ГҐГ¤Г </option>           
+        	    <option id="day_name[4]" value="4" />Г—ГҐГІГўГҐГ°ГЈ</option>           
+        	    <option id="day_name[5]" value="5" />ГЏГїГІГ­ГЁГ¶Г </option>            
+        	    <option id="day_name[6]" value="6" />Г‘ГіГЎГЎГ®ГІГ </option>             
+        	    <option id="day_name[0]" value="0" />Г‚Г®Г±ГЄГ°ГҐГ±ГҐГ­ГјГҐ</option>              
         	    
 			
       	    </select>
@@ -73,7 +73,7 @@ var SwitchWeekTypes = false;		//Switch Week Types false=(Numerator and then Deno
 		<td name="lesson_title" id="lesson_title">lesson_title</td>
 		<td>
         	<div id="lesson_block">
-        		<a href="javascript:" name="lesson" id="lesson" title="Посмотреть расписание">lesson</a>
+        		<a href="javascript:" name="lesson" id="lesson" title="ГЏГ®Г±Г¬Г®ГІГ°ГҐГІГј Г°Г Г±ГЇГЁГ±Г Г­ГЁГҐ">lesson</a>
             </div>
             
             <div class="deleted" id="lessons_block">
@@ -83,12 +83,12 @@ var SwitchWeekTypes = false;		//Switch Week Types false=(Numerator and then Deno
                     <col width="20%" />
                     <thead style="background-color:#CCC">
                 	<tr style="border-bottom:solid black 5px;">
-                    	<td>Номер</td>
-                        <td>Название</td>
+                    	<td>ГЌГ®Г¬ГҐГ°</td>
+                        <td>ГЌГ Г§ГўГ Г­ГЁГҐ</td>
                         <td>
                         	<table>
                             <tr>
-                                <td align="left">Время</td>
+                                <td align="left">Г‚Г°ГҐГ¬Гї</td>
                                 <td width="100%" align="right" style="text-align:right">
                               
                             		<span id="btn_close_timetable" style="cursor:pointer;border:1px solid black;font-size:16pt;color:red;">X</span>
@@ -105,22 +105,22 @@ var SwitchWeekTypes = false;		//Switch Week Types false=(Numerator and then Deno
         </td>
 	</tr>
 	<tr>
-		<td  id="para_name">Пара:</td>
-		<td id="para">Нету</td>
+		<td  id="para_name">ГЏГ Г°Г :</td>
+		<td id="para">ГЌГҐГІГі</td>
 	</tr>
 	<tr>
-		<td id="para_type">Сейчас:</td>
+		<td id="para_type">Г‘ГҐГ©Г·Г Г±:</td>
 		<td id="TimeString">00:00:00</td>
 	</tr>
 	<tr>
 		<td>
 		</td>
 		<td>
-			<input type="checkbox" id="showMseconds" />миллисекуды
+			<input type="checkbox" id="showMseconds" />Г¬ГЁГ«Г«ГЁГ±ГҐГЄГіГ¤Г»
 		</td>
 	</tr>
 	<tr>
-		<td>Время обновления</td>
+		<td>Г‚Г°ГҐГ¬Гї Г®ГЎГ­Г®ГўГ«ГҐГ­ГЁГї</td>
 		<td>
 			<table>
             <tr>
@@ -142,7 +142,7 @@ var SwitchWeekTypes = false;		//Switch Week Types false=(Numerator and then Deno
 	</tr>
 	<tr>
 		<td>
-			Таймер:
+			Г’Г Г©Г¬ГҐГ°:
 		</td>
 		<td>
 			<input type="button" onkeyup="" id="engine" value="Engine" onclick="engine()" />
@@ -150,16 +150,16 @@ var SwitchWeekTypes = false;		//Switch Week Types false=(Numerator and then Deno
 	</tr>
 	<tr>
 		<td>
-			Сменить расписание:
+			Г‘Г¬ГҐГ­ГЁГІГј Г°Г Г±ГЇГЁГ±Г Г­ГЁГҐ:
 		</td>
 		<td>
         	<div id="timetable_block" class="deleted">
 			<select id="timetable">
-            	<option value="-1" id="timetable_disable">Выключено</option>
-				<option value="0" id="timetable_0">Суббота</option>
-				<option value="1" id="timetable_1">Бирюлево</option>
-				<option value="2" id="timetable_2">Нахимовский</option>
-				<option value="3" id="timetable_3">Сокращенный день</option>
+            	<option value="-1" id="timetable_disable">Г‚Г»ГЄГ«ГѕГ·ГҐГ­Г®</option>
+				<option value="0" id="timetable_0">Г‘ГіГЎГЎГ®ГІГ </option>
+				<option value="1" id="timetable_1">ГЃГЁГ°ГѕГ«ГҐГўГ®</option>
+				<option value="2" id="timetable_2">ГЌГ ГµГЁГ¬Г®ГўГ±ГЄГЁГ©</option>
+				<option value="3" id="timetable_3">Г‘Г®ГЄГ°Г Г№ГҐГ­Г­Г»Г© Г¤ГҐГ­Гј</option>
 			</select>
            	</div>
             <div id="timetable_change_block">
@@ -234,12 +234,12 @@ ge("lesson").onclick = function(e,noShow)
 		tdel[0].innerHTML = i;
 		if(Days[day]==BIBL_DAY)
 		{
-			tdel[1].innerHTML="БИБЛИОТЕЧНЫЙ ДЕНЬ";
+			tdel[1].innerHTML="ГЃГ€ГЃГ‹Г€ГЋГ’Г…Г—ГЌГ›Г‰ Г„Г…ГЌГњ";
 			tdel[1].style.backgroundColor="green";
 		}
 		else if(Days[day]==WEEKEND)
 		{
-			tdel[1].innerHTML="Выходной";
+			tdel[1].innerHTML="Г‚Г»ГµГ®Г¤Г­Г®Г©";
 			tdel[1].style.backgroundColor="gray";
 		}
 		else
@@ -389,16 +389,16 @@ ge("day_name").onclick = ge("day_name").onchange =function(setToday)
 }
 var DayNames = new Array
 (
-	"Воскресенье",
-	"Понедельник",
-	"Вторник",
-	"Среда",
-	"Четверг",
-	"Суббота"
+	"Г‚Г®Г±ГЄГ°ГҐГ±ГҐГ­ГјГҐ",
+	"ГЏГ®Г­ГҐГ¤ГҐГ«ГјГ­ГЁГЄ",
+	"Г‚ГІГ®Г°Г­ГЁГЄ",
+	"Г‘Г°ГҐГ¤Г ",
+	"Г—ГҐГІГўГҐГ°ГЈ",
+	"Г‘ГіГЎГЎГ®ГІГ "
 );
 var Lessons =
 [
-	//Воскресенье
+	//Г‚Г®Г±ГЄГ°ГҐГ±ГҐГ­ГјГҐ
 	[
 		new Array("",""),
 		new Array("",""),
@@ -408,58 +408,58 @@ var Lessons =
 		new Array("",""),
 		new Array("","")
 	],	
-	//Понедельник
+	//ГЏГ®Г­ГҐГ¤ГҐГ«ГјГ­ГЁГЄ
 	[
 		new Array("",""),
-		new Array("Основы делопроизводства",""),
-		new Array("Визуальное программирование",""),
-		new Array("Технология разработки программных продуктов",""),
-		new Array("Экономика отрасли",""),
+		new Array("ГЋГ±Г­Г®ГўГ» Г¤ГҐГ«Г®ГЇГ°Г®ГЁГ§ГўГ®Г¤Г±ГІГўГ ",""),
+		new Array("Г‚ГЁГ§ГіГ Г«ГјГ­Г®ГҐ ГЇГ°Г®ГЈГ°Г Г¬Г¬ГЁГ°Г®ГўГ Г­ГЁГҐ",""),
+		new Array("Г’ГҐГµГ­Г®Г«Г®ГЈГЁГї Г°Г Г§Г°Г ГЎГ®ГІГЄГЁ ГЇГ°Г®ГЈГ°Г Г¬Г¬Г­Г»Гµ ГЇГ°Г®Г¤ГіГЄГІГ®Гў",""),
+		new Array("ГќГЄГ®Г­Г®Г¬ГЁГЄГ  Г®ГІГ°Г Г±Г«ГЁ",""),
 		new Array("",""),
 		new Array("","")
 	],	
-	//Вторник
+	//Г‚ГІГ®Г°Г­ГЁГЄ
 	[
 		new Array("",""),
 		new Array("",""),
-		new Array("Информационная безопасность",""),
-		new Array("Физическая культура",""),
-		new Array("Основы построения автоматизированных информ.сиистем",""),
-		new Array("Основы делопроизводства","Правовое обеспечение проф  деятельности"),
+		new Array("Г€Г­ГґГ®Г°Г¬Г Г¶ГЁГ®Г­Г­Г Гї ГЎГҐГ§Г®ГЇГ Г±Г­Г®Г±ГІГј",""),
+		new Array("Г”ГЁГ§ГЁГ·ГҐГ±ГЄГ Гї ГЄГіГ«ГјГІГіГ°Г ",""),
+		new Array("ГЋГ±Г­Г®ГўГ» ГЇГ®Г±ГІГ°Г®ГҐГ­ГЁГї Г ГўГІГ®Г¬Г ГІГЁГ§ГЁГ°Г®ГўГ Г­Г­Г»Гµ ГЁГ­ГґГ®Г°Г¬.Г±ГЁГЁГ±ГІГҐГ¬",""),
+		new Array("ГЋГ±Г­Г®ГўГ» Г¤ГҐГ«Г®ГЇГ°Г®ГЁГ§ГўГ®Г¤Г±ГІГўГ ","ГЏГ°Г ГўГ®ГўГ®ГҐ Г®ГЎГҐГ±ГЇГҐГ·ГҐГ­ГЁГҐ ГЇГ°Г®Гґ  Г¤ГҐГїГІГҐГ«ГјГ­Г®Г±ГІГЁ"),
 		new Array("","")
 		
 	],	
-	//Среда
+	//Г‘Г°ГҐГ¤Г 
 	[
 	 	new Array("",""),
-		new Array("Иностранный язык 1 п/гр",""),
-		new Array("Разработка и эксплуатация удалённых баз данных",""),
-		new Array("Этика и психология проф. деятельности","Математические методы"),
-		new Array("Математические методы (Курсовой проект)",""),
-		new Array("Технология мультимедиа"," "),
+		new Array("Г€Г­Г®Г±ГІГ°Г Г­Г­Г»Г© ГїГ§Г»ГЄ 1 ГЇ/ГЈГ°",""),
+		new Array("ГђГ Г§Г°Г ГЎГ®ГІГЄГ  ГЁ ГЅГЄГ±ГЇГ«ГіГ ГІГ Г¶ГЁГї ГіГ¤Г Г«ВёГ­Г­Г»Гµ ГЎГ Г§ Г¤Г Г­Г­Г»Гµ",""),
+		new Array("ГќГІГЁГЄГ  ГЁ ГЇГ±ГЁГµГ®Г«Г®ГЈГЁГї ГЇГ°Г®Гґ. Г¤ГҐГїГІГҐГ«ГјГ­Г®Г±ГІГЁ","ГЊГ ГІГҐГ¬Г ГІГЁГ·ГҐГ±ГЄГЁГҐ Г¬ГҐГІГ®Г¤Г»"),
+		new Array("ГЊГ ГІГҐГ¬Г ГІГЁГ·ГҐГ±ГЄГЁГҐ Г¬ГҐГІГ®Г¤Г» (ГЉГіГ°Г±Г®ГўГ®Г© ГЇГ°Г®ГҐГЄГІ)",""),
+		new Array("Г’ГҐГµГ­Г®Г«Г®ГЈГЁГї Г¬ГіГ«ГјГІГЁГ¬ГҐГ¤ГЁГ "," "),
 		new Array("","")
 	],
-	//Четверг	
+	//Г—ГҐГІГўГҐГ°ГЈ	
 	[
 	 	new Array("",""),
-		new Array(" ","Информационная безопасность"),
-		new Array("Разработка и эксплуатация удалённых БД","Экономика отрасли"),
-		new Array("Технология мультимедиа",""),
-		new Array("Экономика отрасли","Технология разработки программных продуктов"),
-		new Array("Иностранный язык 2 п/гр"," "),
+		new Array(" ","Г€Г­ГґГ®Г°Г¬Г Г¶ГЁГ®Г­Г­Г Гї ГЎГҐГ§Г®ГЇГ Г±Г­Г®Г±ГІГј"),
+		new Array("ГђГ Г§Г°Г ГЎГ®ГІГЄГ  ГЁ ГЅГЄГ±ГЇГ«ГіГ ГІГ Г¶ГЁГї ГіГ¤Г Г«ВёГ­Г­Г»Гµ ГЃГ„","ГќГЄГ®Г­Г®Г¬ГЁГЄГ  Г®ГІГ°Г Г±Г«ГЁ"),
+		new Array("Г’ГҐГµГ­Г®Г«Г®ГЈГЁГї Г¬ГіГ«ГјГІГЁГ¬ГҐГ¤ГЁГ ",""),
+		new Array("ГќГЄГ®Г­Г®Г¬ГЁГЄГ  Г®ГІГ°Г Г±Г«ГЁ","Г’ГҐГµГ­Г®Г«Г®ГЈГЁГї Г°Г Г§Г°Г ГЎГ®ГІГЄГЁ ГЇГ°Г®ГЈГ°Г Г¬Г¬Г­Г»Гµ ГЇГ°Г®Г¤ГіГЄГІГ®Гў"),
+		new Array("Г€Г­Г®Г±ГІГ°Г Г­Г­Г»Г© ГїГ§Г»ГЄ 2 ГЇ/ГЈГ°"," "),
 		new Array("","")
 	],	
-	//Пятница
+	//ГЏГїГІГ­ГЁГ¶Г 
 	[
 		new Array("",""),
-		new Array("Математические методы",""),
-		new Array("Программное обеспечение компьютерных сетей",""),
-		new Array("Этика и психология профессиональной деятельности",""),
+		new Array("ГЊГ ГІГҐГ¬Г ГІГЁГ·ГҐГ±ГЄГЁГҐ Г¬ГҐГІГ®Г¤Г»",""),
+		new Array("ГЏГ°Г®ГЈГ°Г Г¬Г¬Г­Г®ГҐ Г®ГЎГҐГ±ГЇГҐГ·ГҐГ­ГЁГҐ ГЄГ®Г¬ГЇГјГѕГІГҐГ°Г­Г»Гµ Г±ГҐГІГҐГ©",""),
+		new Array("ГќГІГЁГЄГ  ГЁ ГЇГ±ГЁГµГ®Г«Г®ГЈГЁГї ГЇГ°Г®ГґГҐГ±Г±ГЁГ®Г­Г Г«ГјГ­Г®Г© Г¤ГҐГїГІГҐГ«ГјГ­Г®Г±ГІГЁ",""),
 		new Array("",""),
 		new Array("",""),
 		new Array("","")
 	],	
-	//Суббота
+	//Г‘ГіГЎГЎГ®ГІГ 
 	[
 		new Array("",""),
 		new Array("",""),
@@ -475,18 +475,18 @@ var Lessons =
 
 var Days = new Array
 (
-	WEEKEND, 		//Воскресенье
-	NAHIM,			//Понедельник
-	NAHIM,			//Вторник
-	NAHIM,			//Среда
-	NAHIM,			//Четверг
-	BIRULEVO,		//Пятница
-	BIBL_DAY		//Суббота
+	WEEKEND, 		//Г‚Г®Г±ГЄГ°ГҐГ±ГҐГ­ГјГҐ
+	NAHIM,			//ГЏГ®Г­ГҐГ¤ГҐГ«ГјГ­ГЁГЄ
+	NAHIM,			//Г‚ГІГ®Г°Г­ГЁГЄ
+	NAHIM,			//Г‘Г°ГҐГ¤Г 
+	NAHIM,			//Г—ГҐГІГўГҐГ°ГЈ
+	BIRULEVO,		//ГЏГїГІГ­ГЁГ¶Г 
+	BIBL_DAY		//Г‘ГіГЎГЎГ®ГІГ 
 );
 var weekTypes=new Array
 (
-	"Числитель",
-	"Знаменатель"
+	"Г—ГЁГ±Г«ГЁГІГҐГ«Гј",
+	"Г‡Г­Г Г¬ГҐГ­Г ГІГҐГ«Гј"
 );
 
 sym = ":";
@@ -536,12 +536,12 @@ function ChangeTimetable()
 	
 	switch(timetable)
 	{
-		case SATURDAY: //суббота
+		case SATURDAY: //Г±ГіГЎГЎГ®ГІГ 
 					  //0     1      2	     3       4       5       6 
 			hours 	= [[7,8],[9,10],[10,11],[12,13],[13,14],[14,16],[15,17]];
 			minutes = [[35,55],[0,20],[30,50],[5,25],[30,50],[55,15],[20,40]];
 		break;
-		case BIRULEVO: //бирюлёво
+		case BIRULEVO: //ГЎГЁГ°ГѕГ«ВёГўГ®
 			hours 	= [[7,8],[9,10],[10,11],[12,13],[13,15],[15,16],[16,17]];
 			minutes = [[35,55],[0,20],[30,50],[15,35],[40,0],[5,25],[30,50]];
 		break;
@@ -569,7 +569,7 @@ function ChangeTimetable()
 				
 			}
 		break;
-		default://нахимовский
+		default://Г­Г ГµГЁГ¬Г®ГўГ±ГЄГЁГ©
 			hours 	= [[7,8],[9,10],[10,11],[12,13],[14,15],[15,17],[17,18]];
 			minutes = [[35,55],[0,20],[30,50],[35,55],[25,45],[50,10],[15,35]];
 		
@@ -607,15 +607,15 @@ function TimeCounter()
 	
 	
 	//ge("day_name").disabled=true;
-	ge("lesson_title").innerHTML="Предмет";
-	ge("lesson").innerHTML="Нету";
+	ge("lesson_title").innerHTML="ГЏГ°ГҐГ¤Г¬ГҐГІ";
+	ge("lesson").innerHTML="ГЌГҐГІГі";
 	
 	
 	//alert(day)
 	if((Days[day]==WEEKEND || Days[day]==BIBL_DAY) && set)
 	{
-		document.getElementById("para").innerHTML=Days[day]==BIBL_DAY ? "Библ. День" : "Выходной";
-		document.getElementById("TimeString").innerHTML=Days[day]==BIBL_DAY ? "Библ. День" : "Выходной";
+		document.getElementById("para").innerHTML=Days[day]==BIBL_DAY ? "ГЃГЁГЎГ«. Г„ГҐГ­Гј" : "Г‚Г»ГµГ®Г¤Г­Г®Г©";
+		document.getElementById("TimeString").innerHTML=Days[day]==BIBL_DAY ? "ГЃГЁГЎГ«. Г„ГҐГ­Гј" : "Г‚Г»ГµГ®Г¤Г­Г®Г©";
 		set=false;
 	}
 	var hrs = m.getHours();
@@ -625,8 +625,8 @@ function TimeCounter()
 	//alert(hrs+":"+mins)
 	if((hours[0][0]*60+minutes[0][0]>mins+hrs*60 || hours[6][1]*60+minutes[6][1]<mins+hrs*60)  && set)
 	{
-		document.getElementById("para").innerHTML="Не идет";
-		document.getElementById("TimeString").innerHTML="Не идет";
+		document.getElementById("para").innerHTML="ГЌГҐ ГЁГ¤ГҐГІ";
+		document.getElementById("TimeString").innerHTML="ГЌГҐ ГЁГ¤ГҐГІ";
 		
 		set=false;
 	}
@@ -664,41 +664,41 @@ function TimeCounter()
 	
 	//alert(peremena)
 	Clock();
-	var lesson = "Нету пары";
+	var lesson = "ГЌГҐГІГі ГЇГ Г°Г»";
 	if(set)
 	{
-		document.getElementById("para").innerHTML=para==-1 ? String(peremena)+"<sup>-ая</sup>" : String(para)+"<sup>-ая</sup>";
+		document.getElementById("para").innerHTML=para==-1 ? String(peremena)+"<sup>-Г Гї</sup>" : String(para)+"<sup>-Г Гї</sup>";
 		//m.setSeconds(0,0);
 		var now = m.valueOf();
 		var ob=document.getElementById("para_name");
 		var ob2=document.getElementById("para_type");		
 		if(para==-1)
 		{
-			ob.innerHTML = "Перемена";
-			ob2.innerHTML = "До начала осталось:";
+			ob.innerHTML = "ГЏГҐГ°ГҐГ¬ГҐГ­Г ";
+			ob2.innerHTML = "Г„Г® Г­Г Г·Г Г«Г  Г®Г±ГІГ Г«Г®Г±Гј:";
 			m.setHours(hours[peremena+1][0]);
 			m.setMinutes(minutes[peremena+1][0]);
 			lesson=Lessons[day][peremena+1][1]=="" ? Lessons[day][peremena+1][0] : Lessons[day][peremena+1][weekType];
 			
-			ge("lesson_title").innerHTML="След. предмет";
+			ge("lesson_title").innerHTML="Г‘Г«ГҐГ¤. ГЇГ°ГҐГ¤Г¬ГҐГІ";
 		}
 		else
 		{
 			
-			ob.innerHTML = "Пара";
-			ob2.innerHTML = "До конца осталось:";
+			ob.innerHTML = "ГЏГ Г°Г ";
+			ob2.innerHTML = "Г„Г® ГЄГ®Г­Г¶Г  Г®Г±ГІГ Г«Г®Г±Гј:";
 			m.setHours(hours[para][1]);
 			m.setMinutes(minutes[para][1]);
 			//lesson=Lessons[day][para][1]==" " ? Lessons[day][para][0] : Lessons[day][para][weekType];
 			lesson=Lessons[day][para][weekType];
 			
-			ge("lesson_title").innerHTML="Предмет";
+			ge("lesson_title").innerHTML="ГЏГ°ГҐГ¤Г¬ГҐГІ";
 			
 		}
 		
 		if(lesson.trim()=="") 
 		{
-			lesson="Нету";
+			lesson="ГЌГҐГІГі";
 		}
 		ge("lesson").innerHTML=lesson;
 		m.setSeconds(60,1000);
@@ -747,7 +747,7 @@ function engine()
 		engine_mode=engine_mode==0 ? 1 : 0;
 		if(engine_mode==1) TimeCounter();
 		//Clock();
-		document.getElementById("engine").value=engine_mode==0 ? "Старт" : "Стоп";
+		document.getElementById("engine").value=engine_mode==0 ? "Г‘ГІГ Г°ГІ" : "Г‘ГІГ®ГЇ";
 }
 //setInterval('ChangeSym(false,":"," ")',100);
 function updateTimeChange(how)
